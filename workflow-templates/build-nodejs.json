@@ -1,0 +1,7 @@
+{
+    "name": "Build Node.js SPAs",
+    "description": "Inncosys CI starter workflow",
+    "filePatterns": [
+        "package.json$"
+    ]
+}
