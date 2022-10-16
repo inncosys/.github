@@ -5,18 +5,35 @@ on:
     secrets:
       firebaseServiceAccount:
         required: true
+      envDevBase64:
+        required: true
+      envStagingBase64:
+        required: true
+      envLiveBase64:
+        required: true
     inputs:
-      projectId: 
+      projectDevId: 
         required: true
         type: string
+      projectStagingId: 
+        required: true
+        type: string
+      projectLiveId: 
+        required: true
+        type: string
+      
 jobs:
   deploy: 
     name: Deploy Preview
     runs-on: ubuntu-latest
+    environment: dev
     steps:
       - uses: actions/checkout@v3
       - name: Download All Artifacts
         uses: actions/download-artifact@v3
+      - name: Create env file        
+        run: |
+          echo ${{ secrets.envDevBase64 }} | base64 --decode > .env 
       - name: Display structure of downloaded files
         run: ls -R     
       - uses: FirebaseExtended/action-hosting-deploy@v0
@@ -24,4 +41,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.firebaseServiceAccount }}'
           channelId: live
-          projectId: '${{ inputs.projectId }}'
+          projectId: '${{ inputs.projectDevId }}'

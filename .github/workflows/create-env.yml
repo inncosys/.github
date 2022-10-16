@@ -9,7 +9,7 @@ jobs:
   create-file:
     runs-on: ubuntu-latest
     steps:
-      - name: Create file        
+      - name: Create env file        
         run: |
           echo ${{ secrets.envBase64 }} | base64 --decode > .env 
       - name: 'Upload Artifact'
