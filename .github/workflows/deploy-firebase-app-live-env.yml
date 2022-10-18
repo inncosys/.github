@@ -1,0 +1,88 @@
+name: Deploy Firebase App all enviroments
+
+on:
+  workflow_call:
+    secrets:
+      firebaseServiceAccountDev:
+        required: true
+      firebaseServiceAccountStaging:
+        required: true
+      firebaseServiceAccountLive:
+        required: true
+      envDevBase64:
+        required: true
+      envStagingBase64:
+        required: true
+      envLiveBase64:
+        required: true
+    inputs:
+      projectDevId: 
+        required: true
+        type: string
+      projectStagingId: 
+        required: true
+        type: string
+      projectLiveId: 
+        required: true
+        type: string
+      
+jobs:
+  deploy: 
+    name: Deploy Dev
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v3
+      - name: Create env file        
+        run: |
+          echo ${{ secrets.envDevBase64 }} | base64 --decode > .env 
+      - name: Display structure of downloaded files
+        run: ls -R     
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.firebaseServiceAccountDev }}'
+          channelId: live
+          projectId: '${{ inputs.projectDevId }}'
+  deploy_staging: 
+    name: Deploy Staging
+    runs-on: ubuntu-latest
+    needs: deploy
+    environment: staging    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v3
+      - name: Create env file        
+        run: |
+          echo ${{ secrets.envStagingBase64 }} | base64 --decode > .env 
+      - name: Display structure of downloaded files
+        run: ls -R     
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.firebaseServiceAccountStaging }}'
+          channelId: live
+          projectId: '${{ inputs.projectStagingId }}'
+  deploy_live: 
+    name: Deploy Staging
+    runs-on: ubuntu-latest
+    needs: deploy_staging
+    environment: live
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v3
+      - name: Create env file        
+        run: |
+          echo ${{ secrets.envLiveBase64 }} | base64 --decode > .env 
+      - name: Display structure of downloaded files
+        run: ls -R     
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.firebaseServiceAccountLive }}'
+          channelId: live
+          projectId: '${{ inputs.projectLiveId }}'
