@@ -35,8 +35,10 @@ jobs:
         run: npm --prefix  pipelines/.github/scripts/download-artifacts install
       - name: Download artifacts        
         run: npm --prefix  pipelines/.github/scripts/download-artifacts run download -- ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }} ${{ inputs.artifactId }}
+      - name: Display structure of downloaded artifacts
+        run: ls -R  
       - name: Unpack artifacts      
-        run: tar -xvf dist.zip 
+        run: tar -xvf dist.zip -C /dist
       - name: Display structure of downloaded files
         run: ls -R     
       - uses: FirebaseExtended/action-hosting-deploy@v0
