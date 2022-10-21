@@ -28,6 +28,11 @@ jobs:
       - name: Create env file        
         run: |
           echo ${{ secrets.envBase64 }} | base64 --decode > .env 
+      - name: Checkout pipelines repo
+        uses: actions/checkout@v3
+        with:
+          repository: inncosys/.github
+          path: ./
       - name: Install Scripts dependencies      
         run: npm --prefix  .github/scripts/download-artifacts install
       - name: Download artifacts        
