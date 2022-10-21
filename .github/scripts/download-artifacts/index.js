@@ -16,7 +16,7 @@ import { createWriteStream } from "fs"
         }
         const response = await fetch(url, request);
         const artifactUrl = response.headers.get("Location")
-        await downloadFile(artifactUrl, "../../../dist.zip")
+        await downloadFile(artifactUrl, "../../../../dist.zip")
     } catch (e) {
         console.error(e)
         process.exit(1);

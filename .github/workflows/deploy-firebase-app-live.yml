@@ -32,11 +32,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: inncosys/.github
-          path: ./
+          path: pipelines
       - name: Install Scripts dependencies      
-        run: npm --prefix  .github/scripts/download-artifacts install
+        run: npm --prefix  pipelines/.github/scripts/download-artifacts install
       - name: Download artifacts        
-        run: npm --prefix  .github/scripts/download-artifacts run download -- ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }} ${{ inputs.artifactId }}
+        run: npm --prefix  pipelines/.github/scripts/download-artifacts run download -- ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }} ${{ inputs.artifactId }}
+      - name: Unpack artifacts      
+        run: tar -xvf dist.zip 
       - name: Display structure of downloaded files
         run: ls -R     
       - uses: FirebaseExtended/action-hosting-deploy@v0
