@@ -29,9 +29,7 @@ jobs:
         run: |
           echo ${{ secrets.envBase64 }} | base64 --decode > .env 
       - name: Install Scripts dependencies      
-        run: |
-          cd .github/scripts/download-artifacts
-          npm install
+        run: npm --prefix  .github/scripts/download-artifacts install
       - name: Download artifacts        
         run: npm --prefix  .github/scripts/download-artifacts run download -- ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }} ${{ inputs.artifactId }}
       - name: Display structure of downloaded files
