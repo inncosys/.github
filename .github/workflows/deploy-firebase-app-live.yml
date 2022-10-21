@@ -10,7 +10,10 @@ on:
     inputs:
       projectId: 
         required: true
-        type: string      
+        type: string         
+      artifactId: 
+        required: true
+        type: number
 jobs:
   deploy: 
     name: Deploy App
@@ -22,6 +25,12 @@ jobs:
       - name: Create env file        
         run: |
           echo ${{ secrets.envBase64 }} | base64 --decode > .env 
+      - name: Install Scripts dependencies      
+        run: |
+          cd .github/scripts/download-artifacts
+          npm install
+      - name: Download artifacts        
+        run: npm --prefix  .github/scripts/download-artifacts run download -- ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }} ${{ inputs.artifactId }}
       - name: Display structure of downloaded files
         run: ls -R     
       - uses: FirebaseExtended/action-hosting-deploy@v0

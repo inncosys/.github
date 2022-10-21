@@ -1,0 +1,15 @@
+{
+  "name": "download-artifacts",
+  "version": "1.0.0",
+  "description": "Utility to download github artifacts",
+  "main": "index.js",
+  "scripts": {
+    "download": "node index.js"
+  },
+  "author": "Inncosys",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.2.10"
+  },
+  "type": "module"
+}
