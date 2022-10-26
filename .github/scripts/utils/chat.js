@@ -8,8 +8,7 @@ import fetch from 'node-fetch';
         const commitHash = args[2];
         const appName = args[3];
         const version = args[4];
-        const appSite = args[5];
-        console.log(url, env, version, commitHash);
+        const appSite = args[5]; 
         const request = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -58,10 +57,7 @@ import fetch from 'node-fetch';
                 ]
 
             })
-        }
-
-
-        console.log(url, env, version, commitHash, request);
+        } 
         const response = await fetch(url, request)
         const responseJson = await response.json();
         console.log(responseJson);
