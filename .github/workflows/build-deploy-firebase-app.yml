@@ -1,0 +1,61 @@
+name: Deploy Firebase App
+
+on:
+  workflow_call:
+    secrets:
+      firebaseServiceAccount:
+        required: true
+      envBase64:
+        required: true
+    inputs:
+      projectId: 
+        required: true
+        type: string
+      artifactId: 
+        required: true
+        type: number      
+      commitHash: 
+        required: true
+        type: string   
+      enviromentDesc: 
+        required: true
+        type: string
+      appName: 
+        required: false
+        type: string
+      appVersion: 
+        required: false
+        type: string
+      siteUrl: 
+        required: false
+        type: string
+jobs:
+  deploy: 
+    name: Deploy App
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.commitHash }}
+      - name: Create env file        
+        run: |
+          echo ${{ secrets.envBase64 }} | base64 --decode > .env
+          echo ${{ secrets.envBase64 }}
+      - run: npm install
+      - run: npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.firebaseServiceAccount }}'
+          channelId: live
+          projectId: '${{ inputs.projectId }}'
+  notify:
+    uses: "inncosys/.github/.github/workflows/notify-deploy.yml@main"
+    with:
+      commitHash: '${{ inputs.commitHash }}'
+      env: '${{ inputs.enviromentDesc }}'
+      appName: '${{ inputs.appName }}'
+      version: '${{ inputs.appVersion }}'
+      site: '${{ inputs.siteUrl }}'
+    secrets:
+      chatUrl: ${{ secrets.CHAT_URL }}

@@ -4,7 +4,8 @@
   "description": "Utility to download github artifacts",
   "main": "index.js",
   "scripts": {
-    "download": "node index.js"
+    "download": "node download.js",
+    "notify": "node chat.js"
   },
   "author": "Inncosys",
   "license": "ISC",

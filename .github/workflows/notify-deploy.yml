@@ -1,0 +1,36 @@
+name: Notify Deployment
+on:
+  workflow_call:
+    secrets:
+      chatUrl:
+        required: true
+    inputs:
+      commitHash: 
+        required: true
+        type: string
+      env: 
+        required: true
+        type: string
+      appName: 
+        required: false
+        type: string    
+      version: 
+        required: false
+        type: string   
+      site: 
+        required: false
+        type: string  
+jobs:
+  notify: 
+    name: Send notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pipelines repo
+        uses: actions/checkout@v3
+        with:
+          repository: inncosys/.github
+          path: pipelines
+      - name: Install Scripts dependencies      
+        run: npm --prefix  pipelines/.github/scripts/utils install
+      - name: Download artifacts        
+        run: npm --prefix  pipelines/.github/scripts/utils run notify -- "${{ secrets.chatUrl }}" ${{ inputs.env }} ${{ inputs.commitHash }} "${{ inputs.appName }}" "${{ inputs.version }}" "${{ inputs.site }}"

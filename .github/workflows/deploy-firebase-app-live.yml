@@ -19,28 +19,10 @@ jobs:
     name: Deploy App
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - uses: actions/checkout@v3 
-      - name: Create env file        
-        run: |
-          echo ${{ secrets.envBase64 }} | base64 --decode > .env 
-      - name: Checkout pipelines repo
-        uses: actions/checkout@v3
-        with:
-          repository: inncosys/.github
-          path: pipelines
-      - name: Install Scripts dependencies      
-        run: npm --prefix  pipelines/.github/scripts/download-artifacts install
-      - name: Download artifacts        
-        run: npm --prefix  pipelines/.github/scripts/download-artifacts run download -- ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }} ${{ inputs.artifactId }}
-      - name: Display structure of downloaded artifacts
-        run: ls -R  
-      - name: Unpack artifacts      
-        run: tar -xvf dist.zip -C /dist
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v3
       - name: Display structure of downloaded files
-        run: ls -R     
+        run: ls -R
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
