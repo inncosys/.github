@@ -32,5 +32,5 @@ jobs:
           path: pipelines
       - name: Install Scripts dependencies      
         run: npm --prefix  pipelines/.github/scripts/utils install
-      - name: Download artifacts        
+      - name: Sending Message        
         run: npm --prefix  pipelines/.github/scripts/utils run notify -- "${{ secrets.chatUrl }}" ${{ inputs.env }} ${{ inputs.commitHash }} "${{ inputs.appName }}" "${{ inputs.version }}" "${{ inputs.site }}"

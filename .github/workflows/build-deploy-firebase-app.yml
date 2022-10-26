@@ -64,4 +64,4 @@ jobs:
       version: "${{ inputs.appVersion }}"
       site: "${{ inputs.siteUrl }}"
     secrets:
-      chatUrl: ${{ secrets.CHAT_URL }}
+      chatUrl: ${{ secrets.chatUrl }}
