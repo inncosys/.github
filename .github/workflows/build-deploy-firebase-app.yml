@@ -7,37 +7,42 @@ on:
         required: true
       envBase64:
         required: true
+      chatUrl:
+        required: true
     inputs:
-      projectId: 
+      projectId:
         required: true
         type: string
-      artifactId: 
-        required: true
-        type: number      
-      commitHash: 
-        required: true
-        type: string   
-      enviromentDesc: 
+      nodeVersion:
         required: true
         type: string
-      appName: 
+      commitHash:
+        required: true
+        type: string
+      enviromentDesc:
+        required: true
+        type: string
+      appName:
         required: false
         type: string
-      appVersion: 
+      appVersion:
         required: false
         type: string
-      siteUrl: 
+      siteUrl:
         required: false
         type: string
 jobs:
-  deploy: 
+  deploy:
     name: Deploy App
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ inputs.commitHash }}
-      - name: Create env file        
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.nodeVersion }}
+      - name: Create env file
         run: |
           echo ${{ secrets.envBase64 }} | base64 --decode > .env
           echo ${{ secrets.envBase64 }}
@@ -45,17 +50,18 @@ jobs:
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.firebaseServiceAccount }}'
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.firebaseServiceAccount }}"
           channelId: live
-          projectId: '${{ inputs.projectId }}'
+          projectId: "${{ inputs.projectId }}"
   notify:
+    needs: deploy
     uses: "inncosys/.github/.github/workflows/notify-deploy.yml@main"
     with:
-      commitHash: '${{ inputs.commitHash }}'
-      env: '${{ inputs.enviromentDesc }}'
-      appName: '${{ inputs.appName }}'
-      version: '${{ inputs.appVersion }}'
-      site: '${{ inputs.siteUrl }}'
+      commitHash: "${{ inputs.commitHash }}"
+      env: "${{ inputs.enviromentDesc }}"
+      appName: "${{ inputs.appName }}"
+      version: "${{ inputs.appVersion }}"
+      site: "${{ inputs.siteUrl }}"
     secrets:
       chatUrl: ${{ secrets.CHAT_URL }}
