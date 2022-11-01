@@ -9,6 +9,9 @@ on:
       projectId: 
         required: true
         type: string
+      target: 
+        required: false
+        type: string
 jobs:
   deploy:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
@@ -25,3 +28,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.firebaseServiceAccount }}'
           projectId: '${{ inputs.projectId }}'
+          target: '${{ inputs.target }}'
