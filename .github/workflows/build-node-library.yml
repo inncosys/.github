@@ -6,8 +6,14 @@ on:
       nodeVersion:
         required: true
         type: string
+      path:
+        required: false
+        type: string
 jobs:
   test:
+    defaults:
+      run:
+        working-directory: ${{ inputs.path }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -18,6 +24,9 @@ jobs:
       - run: npm run lint --if-present 
       - run: npm run test --if-present
   build:
+    defaults:
+      run:
+        working-directory: ${{ inputs.path }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

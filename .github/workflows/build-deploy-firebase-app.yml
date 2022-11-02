@@ -31,8 +31,14 @@ on:
       siteUrl:
         required: false
         type: string
+      path:
+        required: false
+        type: string
 jobs:
   deploy:
+    defaults:
+      run:
+        working-directory: ${{ inputs.path }}
     name: Deploy App
     runs-on: ubuntu-latest
     steps:

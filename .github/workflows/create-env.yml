@@ -6,7 +6,7 @@ on:
       envBase64:
         required: true
 jobs:
-  create-file:
+  create-file: 
     runs-on: ubuntu-latest
     steps:
       - name: Create env file        
