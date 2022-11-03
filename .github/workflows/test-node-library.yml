@@ -9,6 +9,7 @@ on:
       path:
         required: false
         type: string
+        default: ${GITHUB_WORKSPACE} 
 jobs:
   test:
     defaults:
