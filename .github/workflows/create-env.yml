@@ -23,6 +23,8 @@ jobs:
           mkdir -p ${{ inputs.path }}
           cd ${{ inputs.path }}
           echo ${{ secrets.envBase64 }} | base64 --decode > .env 
+      - name: Display structure of downloaded files
+        run: ls -R   
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
         with:
