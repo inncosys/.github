@@ -6,6 +6,10 @@ on:
       nodeVersion:
         required: true
         type: string
+      artifactPath:
+        required: true
+        type: string
+        default: "dist"
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -30,6 +34,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist
-          path: |
-            dist
+          path: ${{ inputs.artifactPath }}
       
