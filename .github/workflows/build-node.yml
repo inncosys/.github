@@ -22,6 +22,8 @@ jobs:
         with:
           node-version: ${{ inputs.nodeVersion }}
       - run: npm install
+      - run: pwd
+      - run: ls -la
       - run: npm run lint --if-present 
       - run: npm run test --if-present
   build:
