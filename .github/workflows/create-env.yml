@@ -2,6 +2,15 @@ name: Create enviroment file
 
 on:
   workflow_call:
+    inputs:      
+      path:
+        required: true
+        type: string
+        default: ${GITHUB_WORKSPACE}
+      artifactName:
+        required: true
+        type: string
+        default: "env"
     secrets:
       envBase64:
         required: true
@@ -11,10 +20,10 @@ jobs:
     steps:
       - name: Create env file        
         run: |
+          mkdir -p ${{ inputs.path }}
           echo ${{ secrets.envBase64 }} | base64 --decode > .env 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: env
-          path: |
-            .env
+          name: ${{ inputs.artifactName }}
+          path: ${{ inputs.path }}.env
