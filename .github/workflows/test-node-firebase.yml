@@ -18,5 +18,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install
-      - run: npm run lint --if-present 
       - run: npm run test --if-present
