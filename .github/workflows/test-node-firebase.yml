@@ -3,9 +3,6 @@ name: Build Node.js SPAs
 on:
   workflow_call:
     inputs:
-      nodeVersion:
-        required: true
-        type: string
       path:
         required: true
         type: string
