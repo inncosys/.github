@@ -6,14 +6,20 @@ on:
       nodeVersion:
         required: true
         type: string
+      path:
+        required: true
+        type: string
+        default: ${GITHUB_WORKSPACE} 
 jobs:
   test:
+    defaults:
+      run:
+        working-directory: ${{ inputs.path }}
     runs-on: ubuntu-latest
+    container:
+      image: inncosys/firebase-tools:node16
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ inputs.nodeVersion }}
       - run: npm install
       - run: npm run lint --if-present 
       - run: npm run test --if-present
