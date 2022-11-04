@@ -22,7 +22,7 @@ jobs:
       - name: Download All Artifacts
         uses: actions/download-artifact@v3
       - name: Display structure of downloaded files
-        run: ls -R     
+        run: ls -R -a     
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
