@@ -3,7 +3,7 @@ name: Deploy Firebase Functions
 on:
   workflow_call:
     secrets:
-      firebaseServiceAccount:
+      firebaseToken:
         required: true
     inputs:
       path:
@@ -26,10 +26,7 @@ jobs:
       - name: Download All Artifacts
         uses: actions/download-artifact@v3
       - name: Display structure of downloaded files
-        run: ls -R -a 
-      - name: Create firebase env key
-        run: |
-          echo '${{ secrets.firebaseServiceAccount }}' > $HOME/gcloud.json          
+        run: ls -R -a          
       - name: Deploy
-        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json  && npm run deploy -- --project ${{ inputs.projectId }} --debug
+        run: npm run deploy -- --project ${{ inputs.projectId }} --token ${{ secrets.firebaseToken }}
       
