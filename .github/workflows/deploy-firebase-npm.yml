@@ -1,0 +1,35 @@
+name: Deploy Firebase Functions
+
+on:
+  workflow_call:
+    secrets:
+      firebaseServiceAccount:
+        required: true
+    inputs:
+      path:
+        required: true
+        type: string
+        default: ${GITHUB_WORKSPACE} 
+      projectId: 
+        required: true
+        type: string
+jobs:
+  test:
+    defaults:
+      run:
+        working-directory: ${{ inputs.path }}
+    runs-on: ubuntu-latest
+    container:
+      image: inncosys/firebase-tools:node16
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v3
+      - name: Display structure of downloaded files
+        run: ls -R -a 
+      - name: Create firebase env key
+        run: |
+          echo '${{ secrets.firebaseServiceAccount }}' > $HOME/gcloud.json          
+      - name: Deploy
+        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json  && npm run deploy -- --project ${{ inputs.projectId }}
+      
