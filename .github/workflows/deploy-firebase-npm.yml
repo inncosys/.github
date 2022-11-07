@@ -31,5 +31,5 @@ jobs:
         run: |
           echo '${{ secrets.firebaseServiceAccount }}' > $HOME/gcloud.json          
       - name: Deploy
-        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json  && firebase deploy --only functions  --project ${{ inputs.projectId }}
+        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json  && npm run deploy -- --project ${{ inputs.projectId }} --debug
       
