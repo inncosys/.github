@@ -28,7 +28,7 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R -a          
       - name: NPM Install
-      - run: npm install
+        run: npm install
       - name: Deploy
         run: npm run deploy -- --project ${{ inputs.projectId }} --token ${{ secrets.firebaseToken }}
       
