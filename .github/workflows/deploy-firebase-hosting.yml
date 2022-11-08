@@ -1,4 +1,4 @@
-name: Deploy Firebase App Preview Channel
+name: Deploy Firebase App
 
 on:
   workflow_call:
