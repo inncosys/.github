@@ -6,26 +6,32 @@ on:
       firebaseServiceAccount:
         required: true
     inputs:
-      projectId: 
+      projectId:
         required: true
         type: string
-      target: 
+      target:
         required: false
         type: string
+      commitHash:
+        required: false
+        type: string
+        default: ${{ github.sha }}
 jobs:
   deploy:
     name: Deploy Preview
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.commitHash }}
       - name: Download All Artifacts
         uses: actions/download-artifact@v3
       - name: Display structure of downloaded files
-        run: ls -R -a     
+        run: ls -R -a
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.firebaseServiceAccount }}'
-          projectId: '${{ inputs.projectId }}'
-          target: '${{ inputs.target }}'
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.firebaseServiceAccount }}"
+          projectId: "${{ inputs.projectId }}"
+          target: "${{ inputs.target }}"
           channelId: live

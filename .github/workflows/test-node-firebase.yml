@@ -6,7 +6,11 @@ on:
       path:
         required: true
         type: string
-        default: ${GITHUB_WORKSPACE} 
+        default: ${GITHUB_WORKSPACE}
+      commitHash:
+        required: false
+        type: string
+        default: ${{ github.sha }}
 jobs:
   test:
     defaults:
@@ -17,5 +21,7 @@ jobs:
       image: inncosys/firebase-tools:node16
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.commitHash }}
       - run: npm install
       - run: npm run test --if-present

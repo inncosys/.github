@@ -6,11 +6,17 @@ on:
       nodeVersion:
         required: true
         type: string
+    commitHash:
+        required: false
+        type: string
+        default: ${{ github.sha }}
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.commitHash }}
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.nodeVersion }}
@@ -21,6 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.commitHash }}
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.nodeVersion }}

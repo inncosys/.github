@@ -9,10 +9,14 @@ on:
       path:
         required: true
         type: string
-        default: ${GITHUB_WORKSPACE} 
-      projectId: 
+        default: ${GITHUB_WORKSPACE}
+      projectId:
         required: true
         type: string
+      commitHash:
+        required: false
+        type: string
+        default: ${{ github.sha }}
 jobs:
   npm-deploy:
     defaults:
@@ -23,12 +27,13 @@ jobs:
       image: inncosys/firebase-tools:node16
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.commitHash }}
       - name: Download All Artifacts
         uses: actions/download-artifact@v3
       - name: Display structure of downloaded files
-        run: ls -R -a          
+        run: ls -R -a
       - name: NPM Install
         run: npm install
       - name: Deploy
         run: npm run deploy -- --project ${{ inputs.projectId }} --token ${{ secrets.firebaseToken }}
-      
