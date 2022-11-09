@@ -36,4 +36,4 @@ jobs:
       - name: NPM Install
         run: npm install
       - name: Deploy
-        run: npm run deploy -- --project ${{ inputs.projectId }} --token ${{ secrets.firebaseToken }}
+        run: npm run deploy -- --project ${{ inputs.projectId }} --token ${{ secrets.firebaseToken }} --debug
