@@ -1,5 +1,5 @@
-import fetch from 'node-fetch'; 
-
+import fetch from 'node-fetch';
+import { button } from "./chat/action.js"
 (async () => {
     try {
         const args = process.argv.slice(2);
@@ -8,46 +8,28 @@ import fetch from 'node-fetch';
         const commitHash = args[2];
         const appName = args[3];
         const version = args[4];
-        const appSite = args[5]; 
+        const appSite = args[5];
+
         const request = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "cards": [
+                cards: [
                     {
-                        "header": {
-                            "title": `${appName} App Deployment`,
-                            "subtitle": `${appSite}`,
+                        header: {
+                            title: `${appName} App Deployment`,
+                            subtitle: `${appSite}`,
                         },
-                        "sections": [
+                        sections: [
                             {
-                                "widgets": [
+                                widgets: [
                                     {
-                                        "keyValue": {
-                                            "topLabel": `${env} Shipped`,
-                                            "content": `${version} version deployed`,
-                                            "contentMultiline": "true",
-                                            "icon": "CLOCK",
-                                            "button": {
-                                                "textButton": {
-                                                    "text": "Deploy to QA",
-                                                    "onClick": {
-                                                        "action": {
-                                                            "actionMethodName": "deploy",
-                                                            "parameters": [
-                                                                {
-                                                                    "key": "env",
-                                                                    "value": "QA"
-                                                                },
-                                                                {
-                                                                    "key": "hash",
-                                                                    "value": `${commitHash}`
-                                                                }
-                                                            ]
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                        keyValue: {
+                                            topLabel: `${env} Shipped`,
+                                            content: `${version} version deployed`,
+                                            contentMultiline: "true",
+                                            icon: "FLIGHT_DEPARTURE",
+                                            button: button(env, commitHash)
                                         }
                                     }
                                 ]
@@ -57,7 +39,7 @@ import fetch from 'node-fetch';
                 ]
 
             })
-        } 
+        }
         const response = await fetch(url, request)
         const responseJson = await response.json();
         console.log(responseJson);
