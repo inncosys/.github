@@ -9,7 +9,7 @@ import { button } from "./chat/action.js"
         const appName = args[3];
         const version = args[4];
         const appSite = args[5];
-
+        const message = args[6];
         const request = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -21,6 +21,15 @@ import { button } from "./chat/action.js"
                             subtitle: `${appSite}`,
                         },
                         sections: [
+                            {
+                                widgets: [
+                                    {
+                                        textParagraph: {
+                                            text: `${message}`
+                                        }
+                                    }
+                                ]
+                            },
                             {
                                 widgets: [
                                     {
