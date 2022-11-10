@@ -20,6 +20,9 @@ on:
       site: 
         required: false
         type: string  
+      commitMessage: 
+        required: false
+        type: string
 jobs:
   notify: 
     name: Send notification
@@ -33,4 +36,4 @@ jobs:
       - name: Install Scripts dependencies      
         run: npm --prefix  pipelines/.github/scripts/utils install
       - name: Sending Message        
-        run: npm --prefix  pipelines/.github/scripts/utils run notify -- "${{ secrets.chatUrl }}" ${{ inputs.env }} ${{ inputs.commitHash }} "${{ inputs.appName }}" "${{ inputs.version }}" "${{ inputs.site }}"
+        run: npm --prefix  pipelines/.github/scripts/utils run notify -- "${{ secrets.chatUrl }}" ${{ inputs.env }} ${{ inputs.commitHash }} "${{ inputs.appName }}" "${{ inputs.version }}" "${{ inputs.site }}" "${{ inputs.commitMessage }}"
