@@ -7,11 +7,11 @@ on:
         required: true
         type: string
       artifactPath:
-        required: true
+        required: false
         type: string
         default: "dist"
       artifactName:
-        required: true
+        required: false
         type: string
         default: "dist"
       commitHash:
