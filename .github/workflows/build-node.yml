@@ -18,6 +18,10 @@ on:
         required: false
         type: string
         default: ${{ github.sha }}
+      retentionDays:
+        required: false
+        type: number
+        default: 45
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -51,3 +55,4 @@ jobs:
         with:
           name: ${{ inputs.artifactName }}
           path: ${{ inputs.artifactPath }}
+          retention-days: ${{ inputs.retentionDays }}
