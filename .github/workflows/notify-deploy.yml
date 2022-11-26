@@ -4,13 +4,22 @@ on:
     secrets:
       chatUrl:
         required: true
+      deployLinkUrl: 
+        required: true
     inputs:
       commitHash: 
+        required: true
+        type: string
+      repo: 
         required: true
         type: string
       env: 
         required: true
         type: string
+      workflow: 
+        required: false
+        type: string
+        default: build-deploy-env.yml
       appName: 
         required: false
         type: string    
@@ -36,4 +45,6 @@ jobs:
       - name: Install Scripts dependencies      
         run: npm --prefix  pipelines/.github/scripts/utils install
       - name: Sending Message        
-        run: npm --prefix  pipelines/.github/scripts/utils run notify -- "${{ secrets.chatUrl }}" ${{ inputs.env }} ${{ inputs.commitHash }} "${{ inputs.appName }}" "${{ inputs.version }}" "${{ inputs.site }}" "${{ inputs.commitMessage }}"
+        run: npm --prefix  pipelines/.github/scripts/utils run notify -- "${{ secrets.chatUrl }}" ${{ inputs.env }}  "${{ inputs.repo }}"  "${{ inputs.workflow }}" "${{ inputs.commitHash }}" "${{ secrets.deployLinkUrl }}" "${{ inputs.appName }}" "${{ inputs.version }}" "${{ inputs.site }}" "${{ inputs.commitMessage }}"
+
+        

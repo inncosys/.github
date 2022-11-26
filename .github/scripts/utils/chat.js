@@ -5,11 +5,14 @@ import { button } from "./chat/action.js"
         const args = process.argv.slice(2);
         const url = args[0];
         const env = args[1];
-        const commitHash = args[2];
-        const appName = args[3];
-        const version = args[4];
-        const appSite = args[5];
-        const message = args[6];
+        const repo = args[2];
+        const workflow = args[3];
+        const commitHash = args[4];
+        const buttonUrl = args[5];
+        const appName = args[6];
+        const version = args[7];
+        const appSite = args[8];
+        const message = args[9];
         const request = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -38,7 +41,7 @@ import { button } from "./chat/action.js"
                                             content: `${version} version deployed`,
                                             contentMultiline: "true",
                                             icon: "FLIGHT_DEPARTURE",
-                                            button: button(env, commitHash)
+                                            button: button(env, commitHash, message, version, repo, workflow, buttonUrl)
                                         }
                                     }
                                 ]
