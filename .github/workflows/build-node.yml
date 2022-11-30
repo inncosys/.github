@@ -55,7 +55,7 @@ jobs:
         uses: actions/download-artifact@v3
       - name: Display structure of downloaded files
         run: |
-          ls-la
+          ls -la
           ls -R -a          
       - uses: actions/setup-node@v3
         with:
