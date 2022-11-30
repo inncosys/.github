@@ -54,7 +54,9 @@ jobs:
       - name: Download Env artifacts
         uses: actions/download-artifact@v3
       - name: Display structure of downloaded files
-        run: ls -R -a
+        run: |
+          ls-la
+          ls -R -a          
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.nodeVersion }}
