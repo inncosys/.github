@@ -23,7 +23,7 @@ on:
         type: number
         default: 45
       path:
-        required: false
+        required: true
         type: string
         default: ${GITHUB_WORKSPACE}
 jobs:
@@ -41,6 +41,9 @@ jobs:
       - run: npm run test --if-present
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.path }}
     steps:
       - uses: actions/checkout@v3
         with:
