@@ -25,7 +25,7 @@ on:
       path:
         required: false
         type: string
-        default: ${GITHUB_WORKSPACE}
+        default: ""
 jobs:
   test:
     runs-on: ubuntu-latest
