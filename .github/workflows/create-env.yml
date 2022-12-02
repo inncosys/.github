@@ -3,14 +3,13 @@ name: Create enviroment file
 on:
   workflow_call:
     inputs:      
-      path:
-        required: false
-        type: string
-        default: ${GITHUB_WORKSPACE}
       artifactName:
         required: false
         type: string
         default: "env"
+      artifactPath:
+        required: false
+        type: string
     secrets:
       envBase64:
         required: true
@@ -20,8 +19,8 @@ jobs:
     steps:
       - name: Create env file        
         run: |
-          mkdir -p ${{ inputs.path }}
-          cd ${{ inputs.path }}
+          [ -n "${{ inputs.artifactPath }}" ] && mkdir -p ${{ inputs.artifactPath }}
+          [ -n "${{ inputs.artifactPath }}" ] && cd ${{ inputs.artifactPath }}
           echo ${{ secrets.envBase64 }} | base64 --decode > .env 
       - name: Display structure of downloaded files
         run: ls -R -a
@@ -30,3 +29,4 @@ jobs:
         with:
           name: ${{ inputs.artifactName }}
           path: ${{ github.workspace }}
+        
