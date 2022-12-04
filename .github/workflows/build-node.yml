@@ -38,6 +38,10 @@ on:
         required: false
         type: boolean
         default: false
+      coverageArtifactPath:
+        required: false
+        type: string
+        default: "coverage"
     secrets:
       sonarToken:
         required: false
@@ -61,6 +65,11 @@ jobs:
       - name: NPM Run Test
         working-directory: ${{ inputs.path }}
         run: npm run test --if-present
+      - name: "Upload coverage Artifact"
+        uses: actions/upload-artifact@v3
+        with: 
+          path: ${{ inputs.coverageArtifactPath }}
+          retention-days: 1
   sonarcloud:
     if: "${{ inputs.codeAnalysis == true }}"
     name: SonarCloud
