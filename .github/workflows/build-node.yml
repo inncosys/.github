@@ -52,6 +52,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
           ref: ${{ inputs.commitHash }}
       - uses: actions/setup-node@v3
         with:
@@ -65,20 +66,8 @@ jobs:
       - name: NPM Run Test
         working-directory: ${{ inputs.path }}
         run: npm run test --if-present
-      - name: "Upload coverage Artifact"
-        uses: actions/upload-artifact@v3
-        with: 
-          path: ${{ inputs.coverageArtifactPath }}
-          retention-days: 1
-  sonarcloud:
-    if: "${{ inputs.codeAnalysis == true }}"
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: SonarCloud Scan
+        if: "${{ inputs.codeAnalysis == true }}"
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
