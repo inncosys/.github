@@ -38,10 +38,6 @@ on:
         required: false
         type: boolean
         default: false
-      coverageArtifactPath:
-        required: false
-        type: string
-        default: "coverage"
     secrets:
       sonarToken:
         required: false
