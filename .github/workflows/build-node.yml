@@ -79,7 +79,7 @@ jobs:
         with:
           path: ${{ inputs.envArtifactPath }}
           name: ${{ inputs.envArtifactName }}
-          if-no-files-found: warn
+        continue-on-error: true
       - name: Display structure of downloaded files
         run: |
           ls -la
