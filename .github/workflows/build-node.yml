@@ -41,14 +41,14 @@ on:
     secrets:
       sonarToken:
         required: false
-      
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
           ref: ${{ inputs.commitHash }}
       - uses: actions/setup-node@v3
         with:
@@ -87,6 +87,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.nodeVersion }}
+      - name: Authenticate to GitHub Package Registry
+        run: |
+          echo '//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' >> .npmrc
+          echo '@inncosys:registry=https://npm.pkg.github.com' >> .npmrc
       - name: NPM Install
         working-directory: ${{ inputs.path }}
         run: npm install
