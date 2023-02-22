@@ -45,6 +45,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
     steps:
       - uses: actions/checkout@v3
         with:
@@ -53,6 +55,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.nodeVersion }}
+      - name: Authenticate to GitHub Package Registry
+        run: |
+          echo '//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' >> .npmrc
+          echo '@inncosys:registry=https://npm.pkg.github.com' >> .npmrc
+          ls -la
       - name: NPM Install
         working-directory: ${{ inputs.path }}
         run: npm install
@@ -70,6 +77,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.sonarToken }}
   build:
     runs-on: ubuntu-latest
+    permissions:
+      packages: read
     steps:
       - uses: actions/checkout@v3
         with:
@@ -91,6 +100,7 @@ jobs:
         run: |
           echo '//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' >> .npmrc
           echo '@inncosys:registry=https://npm.pkg.github.com' >> .npmrc
+          ls -la
       - name: NPM Install
         working-directory: ${{ inputs.path }}
         run: npm install
