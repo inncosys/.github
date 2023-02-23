@@ -45,6 +45,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v3
         with:
@@ -55,7 +58,6 @@ jobs:
           node-version: ${{ inputs.nodeVersion }}
       - name: Authenticate to GitHub Package Registry
         run: |
-          echo '//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}' >> ~/.npmrc
           echo '@inncosys:registry=https://npm.pkg.github.com' >> ~/.npmrc
           ls -la
       - name: NPM Install
@@ -71,6 +73,7 @@ jobs:
         if: "${{ inputs.codeAnalysis == true }}"
         uses: SonarSource/sonarcloud-github-action@master
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.sonarToken }}
   build:
