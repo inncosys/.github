@@ -45,8 +45,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      packages: read
     steps:
       - uses: actions/checkout@v3
         with:
