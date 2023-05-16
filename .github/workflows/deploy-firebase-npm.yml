@@ -24,7 +24,7 @@ jobs:
         working-directory: ${{ inputs.path }}
     runs-on: ubuntu-latest
     container:
-      image: inncosys/firebase-tools
+      image: inncosys/firebase-tools:node16
     steps:
       - uses: actions/checkout@v3
         with:
