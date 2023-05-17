@@ -62,6 +62,7 @@ jobs:
         with:
           node-version: ${{ inputs.nodeVersion }}
           registry-url: https://npm.pkg.github.com
+          token:  ${{ github.token }}
       - name: NPM Install
         working-directory: ${{ inputs.path }}
         run: npm install
