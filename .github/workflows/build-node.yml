@@ -61,11 +61,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.nodeVersion }}
-      - name: Authenticate to GitHub Package Registry
-        run: |
-          echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
-          echo '@inncosys:registry=https://npm.pkg.github.com' >> ~/.npmrc
-          ls -la
+          registry-url: https://npm.pkg.github.com
       - name: NPM Install
         working-directory: ${{ inputs.path }}
         run: npm install
