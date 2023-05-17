@@ -44,15 +44,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      checks: read
-      contents: read
-      issues: read
-      packages: read
-      pull-requests: read
-      repository-projects: read
+    runs-on: ubuntu-latest 
     steps:
       - uses: actions/checkout@v3
         with:
@@ -63,6 +55,11 @@ jobs:
           node-version: ${{ inputs.nodeVersion }}
           registry-url: https://npm.pkg.github.com
           token:  ${{ github.token }}
+      - name: Authenticate to GitHub Package Registry
+        run: |
+          echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
+          echo '@inncosys:registry=https://npm.pkg.github.com' >> ~/.npmrc
+          ls -la
       - name: NPM Install
         working-directory: ${{ inputs.path }}
         run: npm install
@@ -99,6 +96,11 @@ jobs:
           node-version: ${{ inputs.nodeVersion }} 
           registry-url: https://npm.pkg.github.com
           token:  ${{ github.token }}
+      - name: Authenticate to GitHub Package Registry
+        run: |
+          echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
+          echo '@inncosys:registry=https://npm.pkg.github.com' >> ~/.npmrc
+          ls -la
       - name: NPM Install
         working-directory: ${{ inputs.path }}
         run: npm install
