@@ -38,13 +38,12 @@ jobs:
         with:
           ref: ${{ inputs.commitHash }}
       - uses: actions/setup-node@v3 
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v3 
       - name: Authenticate to GitHub Package Registry
         run: |
           echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
           echo '@inncosys:registry=https://npm.pkg.github.com' >> ~/.npmrc
-          ls -la
-      - name: Download All Artifacts
-        uses: actions/download-artifact@v3 
       - name: Display structure of downloaded files
         run: ls -R -a
       - name: NPM Install
