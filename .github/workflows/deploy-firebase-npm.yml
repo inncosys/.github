@@ -36,7 +36,9 @@ jobs:
           echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
           echo '@inncosys:registry=https://npm.pkg.github.com' >> ~/.npmrc
       - name: Display structure of downloaded files
-        run: pwd && ls -R -a
+        run: |
+         pwd
+         ls -R -a
       - name: NPM Install
         run: npm install
       - name: Deploy
