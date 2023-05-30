@@ -35,6 +35,7 @@ jobs:
         run: |
           echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
           echo '@inncosys:registry=https://npm.pkg.github.com' >> ~/.npmrc
+          npm config set -- '//npm.pkg.github.com/:_authToken' '${{ github.token }}'
       - name: Display structure of downloaded files
         run: |
          pwd
