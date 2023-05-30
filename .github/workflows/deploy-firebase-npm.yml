@@ -42,5 +42,7 @@ jobs:
          ls -R -a
       - name: NPM Install
         run: npm install
+        working-directory: ${{ inputs.path }}
       - name: Deploy
         run: npm run deploy -- --project ${{ inputs.projectId }} --token ${{ secrets.firebaseToken }}
+        working-directory: ${{ inputs.path }}
