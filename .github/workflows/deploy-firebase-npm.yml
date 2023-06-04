@@ -52,5 +52,7 @@ jobs:
         working-directory: ${{ inputs.path }}
       - name: Deploy
         run: |
+          node -v
+          npm -v
           npm run deploy -- --project ${{ inputs.projectId }} --token ${{ secrets.firebaseToken }}
         working-directory: ${{ inputs.path }}
