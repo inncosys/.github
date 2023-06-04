@@ -35,7 +35,7 @@ jobs:
           java-version: '11'
       - uses: actions/setup-node@v3
         with:
-          node-version: 18        
+          node-version: 16        
       - name: Setup Firebase
         run: curl -sL https://firebase.tools | bash
       - name: Authenticate to GitHub Package Registry
