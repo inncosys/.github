@@ -34,8 +34,6 @@ jobs:
           distribution: 'corretto' # See 'Supported distributions' for available options
           java-version: '11'
       - uses: actions/setup-node@v3
-        with:
-          node-version: 16        
       - name: Setup Firebase
         run: curl -sL https://firebase.tools | bash
       - name: Authenticate to GitHub Package Registry
