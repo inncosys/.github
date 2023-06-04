@@ -22,15 +22,20 @@ jobs:
     defaults:
       run:
         working-directory: ${{ inputs.path }}
-    runs-on: ubuntu-latest
-    container:
-      image: inncosys/firebase-tools:node16
+    runs-on: ubuntu-latest 
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ inputs.commitHash }} 
       - name: Download All Artifacts
-        uses: actions/download-artifact@v3 
+        uses: actions/download-artifact@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto' # See 'Supported distributions' for available options
+          java-version: '11'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16        
       - name: Authenticate to GitHub Package Registry
         run: |
           echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
@@ -45,6 +50,5 @@ jobs:
         working-directory: ${{ inputs.path }}
       - name: Deploy
         run: |
-          ls
           npm run deploy -- --project ${{ inputs.projectId }} --token ${{ secrets.firebaseToken }}
         working-directory: ${{ inputs.path }}
