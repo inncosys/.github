@@ -36,6 +36,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16        
+      - name: Setup Firebase
+        run: curl -sL https://firebase.tools | bash
       - name: Authenticate to GitHub Package Registry
         run: |
           echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
