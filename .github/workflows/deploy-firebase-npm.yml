@@ -40,9 +40,8 @@ jobs:
         run: curl -sL https://firebase.tools | bash
       - name: Authenticate to GitHub Package Registry
         run: |
-          echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc
-          echo '@inncosys:registry=https://npm.pkg.github.com' >> ~/.npmrc
-          npm config set -- '//npm.pkg.github.com/:_authToken' '${{ github.token }}'
+          echo '@inncosys:registry=https://npm.pkg.github.com/inncosys' >> ~/.npmrc 
+          echo '//npm.pkg.github.com/:_authToken=${{ github.token }}' >> ~/.npmrc           
       - name: Display structure of downloaded files
         run: |
          pwd
