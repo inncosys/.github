@@ -51,8 +51,7 @@ jobs:
         run: npm install
         working-directory: ${{ inputs.path }}
       - name: NPM Install
-        run: npm install
-        working-directory: ${GITHUB_WORKSPACE}
+        run: npm install 
       - name: Deploy
         run: |
           node -v
